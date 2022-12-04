@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LoginController;
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\RegistrasiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,13 +16,18 @@ use App\Http\Controllers\MahasiswaController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LoginController::class,'index'])->name('login')->middleware('guest');
 
-Route::get('input-mahasiswa', [MahasiswaController::class,'index']);
-Route::post('kirim-mahasiswa', [MahasiswaController::class, 'store']);
-Route::get('delete-mahasiswa/{nim}',[MahasiswaController::class,'delete']);
-Route::get('edit-mahasiswa/{nim}',[MahasiswaController::class,'edit']);
-Route::get('show-data-mahasiswa',[MahasiswaController::class,'show']);
-Route::post('update-mahasiswa/{nim}',[MahasiswaController::class,'update']);
+Route::get('input-mahasiswa', [MahasiswaController::class,'index'])->middleware('auth');
+Route::post('kirim-mahasiswa', [MahasiswaController::class, 'store'])->middleware('auth');
+Route::get('delete-mahasiswa/{nim}',[MahasiswaController::class,'delete'])->middleware('auth');
+Route::get('edit-mahasiswa/{nim}',[MahasiswaController::class,'edit'])->middleware('auth');
+Route::get('show-data-mahasiswa',[MahasiswaController::class,'show'])->middleware('auth');
+Route::post('update-mahasiswa/{nim}',[MahasiswaController::class,'update'])->middleware('auth');
+
+Route::post('login',[LoginController::class,'login'])->middleware('guest');
+
+Route::get('registrasi',[RegistrasiController::class,'index'])->middleware('guest');
+Route::post('registrasi',[RegistrasiController::class,'registrasi'])->middleware('guest');
+
+Route::get('logout',[LoginController::class,'logout'])->middleware('auth');

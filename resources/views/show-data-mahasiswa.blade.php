@@ -24,6 +24,9 @@
                 <li class="nav-item">
                     <a class="nav-link active" href="{{url('show-data-mahasiswa')}}">Daftar Data Mahasiswa</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="{{url('logout')}}">Logout</a>
+                </li>
                 </ul>
             </div>
         </div>
